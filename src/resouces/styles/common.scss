@@ -1,0 +1,122 @@
+@import './variables.scss';
+
+.card {
+    border-radius: 10px;
+    color: $font_light;
+
+    &__top {
+        display: flex;
+        align-items: center;
+        background-color: $primary;
+        border-radius: 10px;
+        padding: 10px 16px;
+
+        &_center {
+            justify-content: center;
+        }
+    }
+
+    &__title {
+        font-size: 24px;
+
+        &_small {
+            font-size: 20px;
+        }
+
+        @media (max-width: $d_sm) {
+            font-size: 20px;
+        }
+    }
+
+    &__body {
+        font-size: 16px;
+        line-height: 22px;
+        color: $secondary;
+
+        &_p16 {
+            padding: 10px 16px;
+        }
+
+        &_p10 {
+            padding: 10px;
+        }
+    }
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &_form {
+        width: 100%;
+    }
+
+    &_form > button {
+        &:not(:last-child) {
+            margin-right: 16px;
+        }
+    }
+
+    & > button {
+        &:not(:last-child) {
+            margin-right: 10px;
+        }
+    }
+}
+
+.btn-icon {
+    border-radius: 50%;
+    border: none;
+    padding: 5px;
+    font-size: 18px;
+    background-color: transparent;
+    color: $font_light;
+    transition: .2s;
+    caret-color: transparent;
+
+    &:hover, &:focus-visible {
+        background-color: $font_light;
+        color: $primary;
+    }
+
+    &_darken {
+        background-color: $secondary;
+        color: $font_light;
+
+        &:hover, &:focus-visible {
+            background-color: $font_light;
+            color: $secondary;
+        }
+    }
+
+    &_mini {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    &_radius10 {
+        border-radius: 10px;
+    }
+}
+
+.input {
+    height: 30px;
+    border: 1px solid $secondary;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: transparent;
+    margin-bottom: 16px;
+    transition: .2s;
+
+    &__textarea {
+        resize: none;
+        height: 240px;
+        margin-bottom: 16px;
+    }
+
+    &:focus {
+        box-shadow: 0px 0px 5px 3px rgba(17, 18, 29, 0.25);
+    }
+}

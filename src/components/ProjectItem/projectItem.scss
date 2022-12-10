@@ -1,0 +1,74 @@
+@import '../../resouces/styles/variables.scss';
+
+.project-item {
+    width: 100%;
+    background-color: rgba(87, 73, 79, 0.3);
+    overflow: hidden;
+    transition: .3s;
+
+    &__link {
+        flex: 1 1 auto;
+
+        &:hover, &:focus-visible {
+            text-decoration: underline;
+        }
+    }
+
+    &__wrapp {
+        max-height: 0px;
+        transition: .5s;
+    }
+
+    &__body {
+        margin-bottom: 16px;
+    }
+
+    &.open {
+        .arrow {
+            transform: rotate(90deg);
+        }
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 16px;
+    }
+
+    &:hover {
+        box-shadow: 0px 0px 15px rgba(0,0,0,0.5);
+    }
+}
+
+.arrow {
+    transform: rotate(-90deg);
+}
+
+.project-task {
+    &__title {
+        display: block;
+        background-color: $primary;
+        font-size: 20px;
+        text-align: center;
+        padding: 5px;
+    }
+
+    &__body {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+        color: $secondary;
+        font-size: 16px;
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        & > p {
+            &:not(:last-child) {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}

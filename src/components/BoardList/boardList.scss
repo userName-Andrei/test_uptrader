@@ -1,0 +1,10 @@
+@import '../../resouces/styles/variables.scss';
+
+.boards {
+    display: flex;
+    padding: 0px 16px 20px;
+
+    @media (max-width: $d_lg) {
+        flex-wrap: wrap;
+    }
+}

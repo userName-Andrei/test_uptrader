@@ -1,0 +1,56 @@
+@import '../../resouces/styles/variables.scss';
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-size: 20px;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    color: $font_light;
+    background-color: $secondary;
+    caret-color: transparent;
+    transition: 0.2s;
+    
+    &:hover, &:focus-visible {
+        color: $font_light;
+        background-color: $primary;
+    }
+
+    &:active {
+        color: $secondary;
+        background-color: $grey;
+    }
+
+    &_big {
+        font-size: 24px;
+        padding: 10px;
+
+        @media (max-width: $d_sm) {
+            font-size: 20px;
+            padding: 8px;
+        }
+    }
+
+    &_small {
+        font-size: 16px;
+        padding: 5px;
+    }
+
+    &_error {
+        color: $font_light;
+        background-color: $error;
+
+        &:hover, &:focus-visible {
+            color: $font_light;
+            background-color: $error_light;
+        }
+
+        &:active {
+            color: $secondary;
+            background-color: $grey;
+        }
+    }
+}

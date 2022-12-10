@@ -1,0 +1,157 @@
+@import '../../resouces/styles/variables.scss';
+
+.form-task {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+
+    &__label {
+        display: block;
+        align-self: flex-start;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    &__input {
+        width: 100%;
+
+        &_subtasks {
+            width: 100%;
+            position: relative;
+        }
+    }
+
+    &__row, &__column {
+        width: 100%;
+        display: flex;
+    }
+
+    &__column {
+        flex: 1 1 auto;
+        flex-direction: column;
+
+        &:not(:last-child) {
+            margin-right: 16px;
+        }
+    }
+
+    &__date {
+        font-size: 20px;
+        margin-bottom: 16px;
+
+        &:not(:last-child) {
+            margin-right: auto;
+        }
+    }
+
+    &__filename {
+        align-self: flex-start;
+        color: $grey !important;
+        margin: 0px 0px 10px 16px;
+    }
+
+    &__btn {
+        margin-bottom: 16px;
+
+        &_icon {
+            position: absolute;
+            top: 1px;
+            right: 0px;
+        }
+    }
+
+    &__btn-group {
+        margin-bottom: 16px;
+    }
+
+    @media (max-width: $d_sm) {
+        &__label, &__date {
+            font-size: 18px;
+        }
+    }
+}
+
+input[type="date"] {
+    position: relative;
+}
+  
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    background: transparent;
+}
+
+input[type="date"]:placeholder {
+    z-index: 99;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+}
+
+input[type="date"]:not(:valid):before {
+    content: attr(placeholder);
+    width: 100%;
+}
+
+.subtasks-list {
+    width: 100%;
+    padding: 0px 16px;
+    margin-bottom: 16px;
+
+    &__item {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+
+    &__label {
+        display: flex;
+        font-size: 16px;
+        align-items: center;
+        margin-right: auto;
+    }
+
+    &__checkbox {
+        display: none;
+    }
+
+    &__custom-checkbox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        border: 2px solid $grey;
+        border-radius: 3px;
+        margin-right: 8px;
+        caret-color: transparent;
+
+        &::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: $grey;
+            opacity: 0;
+            transition: .2s;
+        }
+    }
+
+    &__checkbox:checked + &__custom-checkbox::before {
+        opacity: 1;
+    }
+
+    &__checkbox:not(:checked) + &__custom-checkbox::before {
+        opacity: 0;
+    }
+}

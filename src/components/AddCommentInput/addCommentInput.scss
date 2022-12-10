@@ -1,0 +1,12 @@
+.chat-input {
+    display: flex;
+
+    &> .input {
+        margin-bottom: 0;
+    }
+
+    &__input {
+        width: 100%;
+        margin-right: 10px;
+    }
+}

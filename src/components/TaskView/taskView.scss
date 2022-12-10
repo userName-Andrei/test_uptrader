@@ -1,0 +1,191 @@
+@import '../../resouces/styles/variables.scss';
+
+.task-view {
+
+    &__row {
+        display: flex;
+        justify-content: center;
+
+        & > .task-view__column, & > .task-view__subtitle {
+            &:not(:last-child) {
+                margin-right: auto;
+            }
+        }
+
+        & > .task-view__subtitle {
+            margin-bottom: 16px ;
+        }
+
+        @media (max-width: $d_sm) {
+            flex-wrap: wrap;
+
+            & > .task-view__column {
+                flex: 1 1 40%;
+
+                &:not(:last-child) {
+                    margin-bottom: 16px;
+                }
+            }
+
+            & > .task-view__subtitle {
+                flex: 1 1 100%;
+            }
+        }
+    }
+
+    &__column {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        &_inline-flex {
+            display: inline-flex;
+        }
+    }
+
+    &__subtitle {
+        font-size: 20px;
+        margin-bottom: 3px;
+    }
+
+    &__description {
+        font-size: 16px;
+        line-height: 24px;  
+    }
+
+    &__filename {
+        display: inline-block;
+        margin-left: 16px;
+        text-decoration: underline;
+        color: $grey !important;
+        
+        &:hover, &:focus-visible {
+            text-decoration: none;
+        }
+        
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.task-subtasks {
+
+    &__item {
+        position: relative;
+        padding-left: 18px;
+        color: $grey;
+        
+        &:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
+
+    &__status{
+        &_done::before {
+            content: '✓';
+            font-size: 18px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}
+
+.task-comments {
+    margin-bottom: 16px;
+
+    &__not-comments {
+        font-size: 18px;
+    }
+}
+
+.comments-item {
+
+    &:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    &__date {
+        display: block;
+        font-size: 12px;
+        color: $grey
+    }
+
+    &__body {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    &__row {
+        display: flex;
+    }
+
+    &__reply, &__delete, &__subcomment-selector {
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    &__reply {
+        color: #50391f !important;
+        margin-right: 16px;
+    }
+
+    &__delete {
+        color: $error !important;
+    }
+
+    &__subcomment-selector {
+        display: flex;
+        align-items: center;
+        color: $grey;
+        margin-right: 16px;
+
+        &_open::before, &_close::before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            width: 15px;
+            height: 15px;
+            color: $font_light;
+            background-color: $grey;
+            margin-right: 5px;
+        }
+
+        &_open {
+
+            &::before {
+                content: '-';
+                font-size: 18px;
+            }
+        }
+
+        &_close {
+
+            &::before {
+                content: '+';
+            }
+        }
+    }
+}
+
+.subcomments {
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid $grey;
+    margin-left: 7px;
+    overflow: hidden;
+    max-height: 0px;
+    transition: .5s;
+
+    &__item {
+        display: inline-flex;
+        flex-direction: column;
+        margin-left: 16px;
+    }
+
+    &__delete {
+        align-self: flex-end;
+    }
+}

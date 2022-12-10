@@ -1,0 +1,82 @@
+@import '../../resouces/styles/variables.scss';
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, .5);
+    transition: .3s;
+
+    &.open {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    &__dialog {
+        width: $sm;
+        border-radius: 10px;
+        overflow: hidden;
+        color: $font_light;
+    }
+
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background-color: $primary;
+        border-radius: 10px 10px 0px 0px;
+        padding: 10px 16px;
+    }
+
+    &__title {
+        font-size: 24px;
+
+        &_small {
+            font-size: 20px;
+        }
+
+        @media (max-width: $d_sm) {
+            font-size: 20px;
+        }
+    }
+
+    &__body {
+        font-size: 16px;
+        line-height: 22px;
+        color: $secondary;
+        padding: 16px;
+        background-color: $font_light;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    &__close {
+        position: absolute;
+        top: 7px;
+        right: 7px;
+    }
+}
+
+.modal-enter {
+    opacity: 0;
+}
+.modal-enter-active {
+    opacity: 1;
+    transition: all 300ms ease-in;
+}
+.modal-exit {
+    opacity: 1;
+}
+.modal-exit-active {
+    opacity: 0;
+    transition: all 300ms ease-in;
+}
