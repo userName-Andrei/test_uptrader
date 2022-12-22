@@ -1,32 +1,21 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore"
-import { AppDispatch } from ".."
-import { db } from "../../firebase";
-import { BoardActionTypes, IBoard } from "../../types/boards"
-import { ITask } from "../../types/tasks"
-
-const taskRef = collection(db, "tasks");
+import { AppDispatch } from "..";
+import { BoardActionTypes } from "../../types/boards";
+import { ITask } from "../../types/tasks";
+import TaskService from "../../api/TaskService";
 
 export const setProjectBoardsTasks = (projectId: string | number) => {
     return async (dispatch: AppDispatch) => {
         try {
             dispatch({type: BoardActionTypes.SET_PROJECT_BOARDS_TASKS})
 
-            const tasksSnapshot = await getDocs(query(taskRef, orderBy('creation_date')));
-            const tasks: ITask[] = []; 
+            const tasks: ITask[] = await TaskService.getTaskCollection();
             const projectTasks: ITask[] = [];
-
-            tasksSnapshot.forEach(item => {
-                if (item.data()) {
-                    tasks.push(item.data() as ITask);
-                }
-            })
 
             tasks.forEach(task => {
                 if (task.projectId === projectId) {
                     projectTasks.push(task);
                 }
             })
-            
 
             dispatch({type: BoardActionTypes.SET_PROJECT_BOARDS_TASKS_SUCCESS, payload: projectTasks})
         } catch (e) {
