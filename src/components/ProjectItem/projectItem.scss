@@ -4,7 +4,6 @@
     width: 100%;
     background-color: rgba(87, 73, 79, 0.3);
     overflow: hidden;
-    transition: .3s;
 
     &__link {
         flex: 1 1 auto;
@@ -75,15 +74,19 @@
 
 .project-item-enter {
     opacity: 0;
+    transform: translateY(-100px);
 }
 .project-item-enter-active {
     opacity: 1;
+    transform: translateY(0px);
     transition: all 300ms ease-in;
 }
 .project-item-exit {
     opacity: 1;
+    transform: translateY(0px);
 }
 .project-item-exit-active {
     opacity: 0;
+    transform: translateY(100px);
     transition: all 300ms ease-in;
 }
