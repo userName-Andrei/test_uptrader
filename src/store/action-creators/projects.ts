@@ -4,22 +4,16 @@ import { collection, deleteDoc, doc, getDocs, orderBy, query, setDoc } from "fir
 import { db, storage } from "../../firebase";
 import { deleteObject, ref } from "firebase/storage";
 import { ITask } from "../../types/tasks";
+import ProjectService from "../../api/ProjectService";
 
-const projectRef = collection(db, "projects");
+
 
 export const fetchProjects = () => {
     return async (dispatch: AppDispatch) => {
         try {
             dispatch({type: ProjectActionTypes.FETCH_PROJECTS})
 
-            const projectsSnapshot = await getDocs(query(projectRef, orderBy('createdAt')));
-            let projects: IProject[] = []; 
-
-            projectsSnapshot.forEach(item => {
-                if (item.data()) {
-                    projects.push(item.data() as IProject);
-                }
-            })
+            let projects: IProject[] = await ProjectService.getProjectCollection(); 
 
             dispatch({type: ProjectActionTypes.FETCH_PROJECTS_SUCCESS, payload: projects})
         } catch (e) {
@@ -35,31 +29,7 @@ export const deleteProject = (projectId: string | number) => {
     return async (dispatch: AppDispatch) => {
         try {
 
-            const tasksSnapshot = await getDocs(query(collection(db, "tasks")));
-            let tasks: ITask[] = []; 
-
-            tasksSnapshot.forEach(item => {
-                if (item.data()) {
-                    tasks.push(item.data() as ITask);
-                }
-            })
-
-            tasks.forEach(task => {
-                if (task.projectId === projectId) {
-
-                    if (task.files) {
-                        // удаляем файлы
-                        for(let file of task.files) {
-                            deleteObject(ref(storage, `files/${file.name}`));
-                        }
-                    }
-    
-                    // удаляем задачу
-                    deleteDoc(doc(db, "tasks", `${task.id}`));
-                } 
-            })
-
-            await deleteDoc(doc(db, "projects", `${projectId}`));
+            ProjectService.deleteProject(projectId);
 
             dispatch({type: ProjectActionTypes.DELETE_PROJECT, payload: projectId})
         } catch (e) {
@@ -73,7 +43,7 @@ export const addProject = (project: IProject) => {
         try {
             dispatch({type: ProjectActionTypes.ADD_PROJECT})
 
-            await setDoc(doc(db, 'projects', `${project.id}`), project);
+            ProjectService.addProject(project); 
 
             dispatch({type: ProjectActionTypes.ADD_PROJECT_SUCCESS, payload: project})
         } catch (e) {
