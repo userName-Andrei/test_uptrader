@@ -1,26 +1,16 @@
 import { ITask, TaskActionTypes } from "../../types/tasks";
-import { db, storage } from '../../firebase';
-import { query, orderBy, collection, getDocs, setDoc, doc, deleteDoc } from 'firebase/firestore';
+import { storage } from '../../firebase';
 import {v4 as uuid} from 'uuid';
 import { AppDispatch } from "../index";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { BoardActionTypes } from "../../types/boards";
-
-const taskRef = collection(db, "tasks");
+import TaskService from "../../api/TaskService";
 
 export const fetchTasks = () => {
     return async (dispatch: AppDispatch) => {
         try {
             dispatch({type: TaskActionTypes.FETCH_TASKS});
 
-            const tasksSnapshot = await getDocs(query(taskRef, orderBy('creation_date')));
-            let tasks: ITask[] = []; 
-
-            tasksSnapshot.forEach(item => {
-                if (item.data()) {
-                    tasks.push(item.data() as ITask);
-                }
-            })
+            const tasks = await TaskService.getTaskCollection();
 
             dispatch({type: TaskActionTypes.FETCH_TASKS_SUCCESS, payload: tasks})
         } catch (e) {
@@ -39,6 +29,7 @@ export const addTask = (task: ITask, fileList: FileList | null = null) => {
 
             const uploadedFiles = [];
             const id = uuid();
+            let currentTask = {} as ITask;
             
             // проходим по массиву добавляемых файлов
             if (fileList) {
@@ -57,14 +48,13 @@ export const addTask = (task: ITask, fileList: FileList | null = null) => {
                 }
             }
 
-            const currentTask: ITask = {
+            currentTask = {
                 ...task,
                 id,
                 files: uploadedFiles.length ? uploadedFiles : null
             };
 
-            // добавляем задачу
-            await setDoc(doc(db, 'tasks', id), currentTask);
+            await TaskService.addTask(currentTask);
 
             dispatch({type: TaskActionTypes.ADD_TASK_SUCCESS, payload: currentTask});
         } catch (e) {
@@ -83,6 +73,7 @@ export const editTask = (task: ITask, fileList: FileList | null = null) => {
 
             const updatedFiles: any[] = [];
             let url: string = '';
+            let currentTask = {} as ITask;
 
             if (fileList) {
 
@@ -105,13 +96,12 @@ export const editTask = (task: ITask, fileList: FileList | null = null) => {
                 task.files.forEach(file => updatedFiles.push(file))
             }
 
-            // добавляем документ в коллекцию tasks
-            await setDoc(doc(db, 'tasks', `${task.id}`), {...task, files: updatedFiles.length !== 0 ? updatedFiles : null});
-
-            const currentTask: ITask = {
+            currentTask = {
                 ...task,
                 files: updatedFiles.length ? updatedFiles : null
             };
+
+            await TaskService.addTask(currentTask);
 
             dispatch({type: TaskActionTypes.EDIT_TASK_SUCCESS, payload: currentTask});
         } catch (e) {
@@ -137,7 +127,7 @@ export const deleteTask = (task: ITask) => {
                 }
             }
 
-            await deleteDoc(doc(db, "tasks", `${task.id}`));
+            await TaskService.deleteTask(task.id);
 
             dispatch({type: TaskActionTypes.DELETE_TASK_SUCCESS, payload: task.id})
         } catch (e) {
