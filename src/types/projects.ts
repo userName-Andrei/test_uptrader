@@ -15,6 +15,9 @@ export enum ProjectActionTypes {
     FETCH_PROJECTS = "FETCH_PROJECTS",
     FETCH_PROJECTS_SUCCESS ="FETCH_PROJECTS_SUCCESS",
     FETCH_PROJECTS_ERROR = "FETCH_PROJECTS_ERROR",
+    ADD_PROJECT = "ADD_PROJECT",
+    ADD_PROJECT_SUCCESS ="ADD_PROJECT_SUCCESS",
+    ADD_PROJECT_ERROR = "ADD_PROJECT_ERROR",
     DELETE_PROJECT = "DELETE_PROJECT"
 }
 
@@ -32,9 +35,25 @@ interface FetchProjectsError {
     payload: string
 }
 
+interface AddProject {
+    type: ProjectActionTypes.ADD_PROJECT
+}
+
+interface AddProjectSuccess {
+    type: ProjectActionTypes.ADD_PROJECT_SUCCESS,
+    payload: IProject
+}
+
+interface AddProjectError {
+    type: ProjectActionTypes.ADD_PROJECT_ERROR,
+    payload: string
+}
+
 interface DeleteProject {
     type: ProjectActionTypes.DELETE_PROJECT,
     payload: string | number
 }
 
-export type ProjectAction = FetchProjects | FetchProjectsSuccess | FetchProjectsError | DeleteProject;
+export type ProjectAction = FetchProjects | FetchProjectsSuccess | FetchProjectsError |
+                            AddProject | AddProjectSuccess | AddProjectError|
+                            DeleteProject;

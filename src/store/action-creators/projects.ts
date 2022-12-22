@@ -1,6 +1,6 @@
 import { IProject, ProjectActionTypes } from "../../types/projects";
 import { AppDispatch } from "../index";
-import { collection, deleteDoc, doc, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, orderBy, query, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { deleteObject, ref } from "firebase/storage";
 import { ITask } from "../../types/tasks";
@@ -64,6 +64,23 @@ export const deleteProject = (projectId: string | number) => {
             dispatch({type: ProjectActionTypes.DELETE_PROJECT, payload: projectId})
         } catch (e) {
             console.log(e instanceof Error ?  e.message : "Project delete request error")
+        }
+    }
+}
+
+export const addProject = (project: IProject) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            dispatch({type: ProjectActionTypes.ADD_PROJECT})
+
+            await setDoc(doc(db, 'projects', `${project.id}`), project);
+
+            dispatch({type: ProjectActionTypes.ADD_PROJECT_SUCCESS, payload: project})
+        } catch (e) {
+            dispatch({
+                type: ProjectActionTypes.ADD_PROJECT_ERROR,
+                payload: e instanceof Error ?  e.message : "Projects request error"
+            })
         }
     }
 }
