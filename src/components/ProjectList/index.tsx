@@ -1,9 +1,6 @@
 import React, {FC} from 'react';
-import { useEffect } from 'react';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { fetchProjects } from '../../store/action-creators/projects';
-import { IProject } from '../../types/projects';
 import ProjectItem from '../ProjectItem';
 import Spinner from '../Spinner';
 
@@ -11,7 +8,6 @@ import './projectList.scss';
 
 const ProjectList: FC = () => {
 
-    const dispatch = useAppDispatch();
     const projects = useAppSelector(state => state.projects.projects);
     const loading = useAppSelector(state => state.projects.loading);
     const error = useAppSelector(state => state.projects.error);
@@ -25,9 +21,16 @@ const ProjectList: FC = () => {
     }
 
     return (
-        <ul className='project-list'>
-            {projects.map(project => <ProjectItem key={project.id} project={project} />)}
-        </ul>
+        <TransitionGroup className='project-list' component='ul'>
+            {projects.map(project => 
+                <CSSTransition
+                    key={project.id}
+                    timeout={300}
+                    classNames='project-item'>
+                        <ProjectItem key={project.id} project={project} />
+                </CSSTransition>
+            )}
+        </TransitionGroup>
     );
 };
 
