@@ -8,7 +8,7 @@ import Button from '../Button';
 import './projectForm.scss';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { addProject, fetchProjects } from '../../store/action-creators/projects';
+import { addProject, editProject, fetchProjects } from '../../store/action-creators/projects';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 interface ProjectFormProps {
@@ -53,7 +53,7 @@ const ProjectForm: FC<ProjectFormProps> = ({type, projectId, setModalActive}) =>
     const onSubmitEditForm = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        dispatch(addProject(project));
+        dispatch(editProject(project));
         setModalActive(false);
         setProject(initialProject);
     }

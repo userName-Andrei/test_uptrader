@@ -54,3 +54,20 @@ export const addProject = (project: IProject) => {
         }
     }
 }
+
+export const editProject = (project: IProject) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            dispatch({type: ProjectActionTypes.EDIT_PROJECT})
+
+            ProjectService.addProject(project); 
+
+            dispatch({type: ProjectActionTypes.EDIT_PROJECT_SUCCESS, payload: project})
+        } catch (e) {
+            dispatch({
+                type: ProjectActionTypes.EDIT_PROJECT_ERROR,
+                payload: e instanceof Error ?  e.message : "Projects request error"
+            })
+        }
+    }
+}
