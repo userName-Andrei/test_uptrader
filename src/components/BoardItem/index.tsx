@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { addTask, deleteTask, editTask } from '../../store/action-creators/tasks';
+import { editTask } from '../../store/action-creators/tasks';
 import { IBoard } from '../../types/boards';
 import { ITask, TaskStatus } from '../../types/tasks';
 import Modal from '../Modal';

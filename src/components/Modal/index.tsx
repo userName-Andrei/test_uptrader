@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useState } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import './modal.scss';
 import { CSSTransition } from 'react-transition-group';
 

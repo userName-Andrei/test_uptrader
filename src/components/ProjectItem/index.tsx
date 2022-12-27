@@ -1,4 +1,4 @@
-import React, {FC, MouseEvent, RefObject, useRef, useState} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import { IProject } from '../../types/projects';
 import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';

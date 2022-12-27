@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { useDrag } from "react-dnd/dist/hooks";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useAppSelector } from "../../hooks/useAppSelector";
 import { deleteTask } from "../../store/action-creators/tasks";
 import { ITask } from "../../types/tasks";
 import Modal from "../Modal";

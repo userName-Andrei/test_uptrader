@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { v4 as uuid } from 'uuid';
-import React, {ChangeEvent, FC, FormEvent, useState, useEffect} from 'react';
+import React, {ChangeEvent, FC, FormEvent, useState} from 'react';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import Button from '../Button';
 
@@ -8,13 +8,9 @@ import './taskForm.scss';
 import { ISubtask, ITask, TaskPriority, TaskStatus } from '../../types/tasks';
 import FilesInput from '../FilesInput';
 import isSubtasksDone from '../../utils/isSubtaskDone';
-import { doc, setDoc } from 'firebase/firestore';
-import { db, storage } from '../../firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useParams } from 'react-router-dom';
-import { addTask, deleteTask, editTask, fetchTasks } from '../../store/action-creators/tasks';
+import { addTask, deleteTask, editTask } from '../../store/action-creators/tasks';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { refreshBoards } from '../../store/action-creators/boards';
 
 interface TaskFormProps {
     type: 'add' | 'edit',
