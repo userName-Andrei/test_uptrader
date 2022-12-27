@@ -1,65 +1,35 @@
-import classNames from 'classnames';
-import React, { FC, MouseEvent, useEffect, useMemo } from 'react';
-import { createPortal } from 'react-dom';
+import React, { FC, MouseEvent, useState } from 'react';
 import './modal.scss';
+import { CSSTransition } from 'react-transition-group';
 
 interface ModalProps {
     children: React.ReactNode,
     title: string,
     active: boolean,
-    data: string,
     modalHandler: (state: boolean) => void
 }
 
-const modalRootElement = document.querySelector('#modal');
-
 const Modal: FC<ModalProps> = ({
     children, 
-    title, 
-    active, 
-    data,
+    title,
+    active,
     modalHandler
 }) => {
-
-    const scrollWidth = window.innerWidth - document.documentElement.clientWidth;
-    const modalClass = classNames({
-        'modal': true,
-        'open': active
-    })
-
-    const modalElement = useMemo(() => {
-        const element = document.createElement('div');
-        element.dataset.modal = data;
-
-        return element
-    }, [data])
-
+    
     const onClose = (e: MouseEvent) => {
         if (e.currentTarget === e.target) modalHandler(false);
     }
 
-    useEffect(() => {
-        if (active) {
-            document.body.style.overflow = 'hidden';
-	        document.body.style.paddingRight = scrollWidth + 'px';
+    return (
+        <div
+            onClick={onClose} 
+            className="modal">
 
-            modalRootElement!.appendChild(modalElement);
-
-            return () => {
-                modalRootElement!.removeChild(modalElement);
-            }
-        } else {
-            document.body.style.overflow = '';
-            document.body.style.paddingRight = 0 + 'px';
-        }
-    }, [active])
-
-    if (active) {
-        return createPortal(
-            <div
-                onClick={onClose} 
-                className={modalClass}>
-
+            <CSSTransition
+                in={active}
+                timeout={300}
+                classNames="modal__dialog"
+                appear>
                 <div className="modal__dialog">
 
                     <div className="modal__top">
@@ -72,13 +42,11 @@ const Modal: FC<ModalProps> = ({
                     </div>
 
                 </div>
+            </CSSTransition>
+            
 
-            </div>,
-            modalElement
-        )
-    }
-
-    return null;
+        </div>
+    )
 };
 
 export default Modal;

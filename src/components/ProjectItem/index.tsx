@@ -11,6 +11,7 @@ import { ITask, TaskStatus } from '../../types/tasks';
 import { deleteProject } from '../../store/action-creators/projects';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import toggleAccordion from '../../utils/toggleAccordion';
+import { CSSTransition } from 'react-transition-group';
 
 interface ProjectItemProps {
     project: IProject
@@ -73,13 +74,19 @@ const ProjectItem: FC<ProjectItemProps> = ({project}) => {
                     </div>
                 </div>
             </li>
-            <Modal 
-                data='project-edit'
-                title="Edit project"
-                active={modalActive}
-                modalHandler={setModalActive}>
-                <ProjectForm type='edit' projectId={project.id} setModalActive={setModalActive}/>
-            </Modal>
+            <CSSTransition
+                in={modalActive}
+                timeout={300}
+                classNames="modal"
+                mountOnEnter
+                unmountOnExit>
+                <Modal 
+                    active={modalActive}
+                    title="Edit project"
+                    modalHandler={setModalActive}>
+                    <ProjectForm type='edit' projectId={project.id} setModalActive={setModalActive}/>
+                </Modal>
+            </CSSTransition>
         </>
     );
 };

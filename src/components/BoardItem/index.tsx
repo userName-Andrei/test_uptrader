@@ -72,13 +72,20 @@ const BoardItem: FC<BoardItemProps> = ({board}) => {
                 {board.title.toLowerCase() === TaskStatus.queue && 
                     <>
                         <button className="btn board__btn" onClick={() => setModalAddTaskActive(true)}>Add</button>
-                        <Modal 
-                            data='task-add'
-                            title="Add new task" 
-                            active={modalAddTaskActive}
-                            modalHandler={setModalAddTaskActive}>
-                            <TaskForm type='add' setModalActive={setModalAddTaskActive} />
-                        </Modal>
+
+                        <CSSTransition
+                            in={modalAddTaskActive}
+                            timeout={300}
+                            classNames="modal"
+                            mountOnEnter
+                            unmountOnExit>
+                                <Modal 
+                                    active={modalAddTaskActive}
+                                    title="Add new task" 
+                                    modalHandler={setModalAddTaskActive}>
+                                    <TaskForm type='add' setModalActive={setModalAddTaskActive} />
+                                </Modal>
+                        </CSSTransition>
                     </>
                 }
             </div>

@@ -9,6 +9,7 @@ import TaskForm from "../TaskForm";
 import TaskView from "../TaskView";
 
 import './taskItem.scss';
+import { CSSTransition } from "react-transition-group";
 
 interface TaskItemProps {
     task: ITask
@@ -56,24 +57,37 @@ const TaskItem: FC<TaskItemProps> = ({task}) => {
 
                 </div>
             </li>
-            <Modal 
-                data='task-view'
-                title={`${task.title}`} 
-                active={modalViewTaskActive}
-                modalHandler={setModalViewTaskActive}>
-                    <TaskView task={task} />
-            </Modal>
-
-            <Modal 
-                data='task-edit'
-                title={`Edit #${task.number}. ${task.title}`} 
-                active={modalEditTaskActive}
-                modalHandler={setModalEditTaskActive}>
-                    <TaskForm 
-                        type='edit' 
-                        taskId={task.id} 
-                        setModalActive={setModalEditTaskActive} />
-            </Modal>
+            <CSSTransition
+                in={modalViewTaskActive}
+                timeout={300}
+                classNames="modal"
+                mountOnEnter
+                unmountOnExit>
+                    <Modal 
+                        active={modalViewTaskActive}
+                        title={`${task.title}`} 
+                        modalHandler={setModalViewTaskActive}>
+                            <TaskView task={task} />
+                    </Modal>
+            </CSSTransition>
+            
+            <CSSTransition
+                in={modalEditTaskActive}
+                timeout={300}
+                classNames="modal"
+                mountOnEnter
+                unmountOnExit>
+                <Modal 
+                    active={modalEditTaskActive}
+                    title={`Edit #${task.number}. ${task.title}`} 
+                    modalHandler={setModalEditTaskActive}>
+                        <TaskForm 
+                            type='edit' 
+                            taskId={task.id} 
+                            setModalActive={setModalEditTaskActive} />
+                </Modal>
+            </CSSTransition>
+            
         </>
     )
 }

@@ -10,15 +10,7 @@
     width: 100vw;
     height: 100vh;
     padding: 16px;
-    opacity: 0;
-    visibility: hidden;
     background-color: rgba(0, 0, 0, .5);
-    transition: .3s;
-
-    &.open {
-        opacity: 1;
-        visibility: visible;
-    }
 
     &__dialog {
         width: $sm;
@@ -78,5 +70,20 @@
 }
 .modal-exit-active {
     opacity: 0;
+    transition: all 300ms ease-in;
+}
+
+.modal__dialog-appear {
+    transform: translateY(-70px);
+}
+.modal__dialog-appear-active {
+    transform: translateY(0px);
+    transition: all 300ms ease-in;
+}
+.modal__dialog-exit {
+    transform: translateY(0px);
+}
+.modal__dialog-exit-active {
+    transform: translateY(-70px);
     transition: all 300ms ease-in;
 }

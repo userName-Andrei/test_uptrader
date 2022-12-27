@@ -10,6 +10,7 @@ import AddCommentInput from '../AddCommentInput';
 import Modal from '../Modal';
 
 import './taskView.scss';
+import { CSSTransition } from 'react-transition-group';
 
 interface TaskViewProps {
     task: ITask
@@ -181,20 +182,27 @@ const CommentItem: FC<CommentItemProps> = ({comment, taskId}) => {
                 <Subcomments comment={comment} />
             </li>
 
-            <Modal 
-            data='project-edit'
-            title="Reply to comment"
-            active={replyModal.active}
-            modalHandler={(status) => setReplyModal(state => ({...state, active: status}))}>
-                <>
-                    <span className='form-task__label'>Reply to comment:</span>
-                    <AddCommentInput 
-                        taskId={taskId} 
-                        closeModal={() => setReplyModal(state => ({...state, active: false}))}
-                        comment={replyModal.currentComment ? replyModal.currentComment : undefined} 
-                        reply />
-                </>
-            </Modal>
+            <CSSTransition
+                in={replyModal.active}
+                timeout={300}
+                classNames="modal"
+                mountOnEnter
+                unmountOnExit>
+                    <Modal 
+                        active={replyModal.active}
+                        title="Reply to comment"
+                        modalHandler={(status) => setReplyModal(state => ({...state, active: status}))}>
+                        <>
+                            <span className='form-task__label'>Reply to comment:</span>
+                            <AddCommentInput 
+                                taskId={taskId} 
+                                closeModal={() => setReplyModal(state => ({...state, active: false}))}
+                                comment={replyModal.currentComment ? replyModal.currentComment : undefined} 
+                                reply />
+                        </>
+                    </Modal>
+            </CSSTransition>
+            
         </>
     );
 }
