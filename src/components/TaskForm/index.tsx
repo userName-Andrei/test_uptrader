@@ -22,7 +22,13 @@ const TaskForm: FC<TaskFormProps> = ({type, taskId, setModalActive}) => {
 
     const dispatch = useAppDispatch();
     const projectId = useParams().projectId;
-    const currentNumberTask = useAppSelector(state => state.tasks.tasks.filter(task => task.projectId === projectId).length) + 1;
+    const currentNumberTask = useAppSelector(state => state.tasks.tasks.reduce((acc, task) => {
+        if (task.projectId === projectId && (task.number ? task.number : 0) >= acc) {
+            acc = task.number! + 1;
+        }
+
+        return acc;
+    }, 1));
 
     const initialTask: ITask = {
         id: '',
