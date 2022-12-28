@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { useDrag } from "react-dnd/dist/hooks";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { deleteTask } from "../../store/action-creators/tasks";
@@ -91,4 +91,4 @@ const TaskItem: FC<TaskItemProps> = ({task}) => {
     )
 }
 
-export default TaskItem;
+export default React.memo(TaskItem);
