@@ -5,6 +5,8 @@
     &__row {
         display: flex;
         justify-content: center;
+        margin-bottom: 10px; 
+        border-bottom: 1px solid $grey;
 
         & > .task-view__column, & > .task-view__subtitle {
             &:not(:last-child) {
